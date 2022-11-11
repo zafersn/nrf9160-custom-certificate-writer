@@ -223,10 +223,12 @@ class PAN1322(ATProtocol):
             # requests hardware / calibration info as event
             return self.command_with_event_response("AT+JRBD")
 
-    ser = serial.serial_for_url('COM8', baudrate=115200, timeout=1)
-    #~ ser = serial.Serial('COM1', baudrate=115200, timeout=1)
-    with serial.threaded.ReaderThread(ser, PAN1322) as bt_module:
+        def open_serial_port(self):
+            self.serial.serial_for_url('COM8', baudrate=115200, timeout=1)
+
+        #~ ser = serial.Serial('COM1', baudrate=115200, timeout=1)
+    #with serial.threaded.ReaderThread(ser, PAN1322) as bt_module:
        # bt_module.reset()
-        bt_module.test()
+     #   bt_module.test()
        # print("reset OK")
        # print("MAC address is", bt_module.get_mac_address())
