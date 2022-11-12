@@ -58,7 +58,7 @@ def list_serial_ports(evt):
         if i:
             print(i)
             #devices.append(i)
-            listbox.insert(END, i)
+            #listbox.insert(END, i)
     # listbox.insert(devices)
     '''
     w = evt.widget
@@ -69,7 +69,7 @@ def list_serial_ports(evt):
 
 window = Tk()
 window.title('read a data from USB')
-window.minsize(width=1050, height=600)
+window.minsize(width=1250, height=600)
 window.configure(padx=30, pady=250, bg='#BDBDB7')
 
 label1 = Label(text='CA certificate', bg='#BDBDB7')
@@ -127,12 +127,28 @@ button2.place(y=250, x=800, width=160)
 button3 = Button(text='Serial open', activeforeground='red', command=clicked_delate)
 button3.place(y=280, x=600, width=360)
 
-label_list_box = Label(window)
-listbox = Listbox(window)
-label_list_box.pack(side="bottom", fill="x")
-listbox.pack(side="top", fill="both", expand=True)
 
-listbox.bind("<<ListboxSelect>>", list_serial_ports)
+scrollbar = Scrollbar(window)
+scrollbar.pack( side = RIGHT, fill = Y )
+
+mylist = Listbox(window, yscrollcommand = scrollbar.set )
+mylist.bind("<<ListboxSelect>>",list_serial_ports)
+
+
+
+
+mylist.pack( side = RIGHT, fill = BOTH )
+scrollbar.config( command = mylist.yview )
+
+
+
+'''label_list_box = Label(window)
+listbox = Listbox(window,xscrollcommand= scrool_bar.set)
+
+label_list_box.place(y= 300, x=630)
+listbox.place(y=20, x=1100,)'''
+
+
 
 #listbox.insert(["al", "ye"])
 # window.mainloop()
