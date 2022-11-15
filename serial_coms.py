@@ -225,7 +225,6 @@ class PAN1322(ATProtocol):
 
         def open_serial_port(self):
             self.serial.serial_for_url('COM8', baudrate=115200, timeout=1)
-
         #~ ser = serial.Serial('COM1', baudrate=115200, timeout=1)
     #with serial.threaded.ReaderThread(ser, PAN1322) as bt_module:
        # bt_module.reset()

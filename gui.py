@@ -2,6 +2,8 @@ import subprocess
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter.messagebox import showinfo
+
 from serial_coms import *
 
 
@@ -25,15 +27,15 @@ def clicked_cb4():
 
 def clicked_button1():
     messagebox.showinfo('Message', 'it loaded successfully')
-    bt_module.test()
+
 
 
 def clicked_button2():
     messagebox.showinfo('Message', 'Certificates are updated')
 
 
-def clicked_delate():
-    messagebox.askquestion(message='Are you sure')
+#def clicked_delate():
+   # messagebox.askquestion(message='Are you sure')
 
 
 def button1_clicked():
@@ -45,20 +47,27 @@ def button2_clicked():
 
 
 def serial_clicked():
-    pass
+    mylist.get()
+    with open("data.txt", "w") as data_file:
+        print(data_file)
 
 
-def list_serial_ports(evt):
+def list_serial_ports(event):
     proc = subprocess.Popen(["ioreg -p IOUSB -w0 | sed 's/[^o]*o //; s/@.*$//' | grep -v '^Root.*'"],
                             stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
+    showinfo(
+        f'you selected,{mylist.get}'
+    )
     # print("program output:", out)
     devices = []
-    for i in out.decode("utf-8").split('\n'):
-        if i:
-            print(i)
-            #devices.append(i)
-            #listbox.insert(END, i)
+
+    for mylist in out.decode("utf-8").split('\n'):
+
+        if mylist:
+            print(mylist)
+            #devices.append(mylist)
+            #.insert(END,)
     # listbox.insert(devices)
     '''
     w = evt.widget
@@ -69,11 +78,12 @@ def list_serial_ports(evt):
 
 window = Tk()
 window.title('read a data from USB')
-window.minsize(width=1250, height=600)
+window.geometry("1250x600+50+50")
+
 window.configure(padx=30, pady=250, bg='#BDBDB7')
 
 label1 = Label(text='CA certificate', bg='#BDBDB7')
-label1.place(y=-80, x=10)
+label1.place(y=-90, x=10 )
 text_box1 = Text(width=70, height=7, bg='#DCDCDC')
 text_box1.place(y=-55, x=10)
 label2 = Label(text='Client certificate', bg='#BDBDB7')
@@ -84,6 +94,7 @@ label3 = Label(text='Private key', bg='#BDBDB7')
 label3.place(y=185, x=10)
 text_box3 = Text(width=70, height=7, bg='#DCDCDC')
 text_box3.place(y=210, x=10)
+
 
 cb = Checkbutton(bg='#BDBDB7')
 cb.place(y=-55, x=530)
@@ -124,21 +135,21 @@ button1 = Button(text='load from JSON', activeforeground='green', command=clicke
 button1.place(y=250, x=600, width=190)
 button2 = Button(text='Update Certificates', activeforeground='blue', command=clicked_button2)
 button2.place(y=250, x=800, width=160)
-button3 = Button(text='Serial open', activeforeground='red', command=clicked_delate)
+button3 = Button(text='Serial open', activeforeground='red', command=serial_clicked)
 button3.place(y=280, x=600, width=360)
 
 
-scrollbar = Scrollbar(window)
-scrollbar.pack( side = RIGHT, fill = Y )
-
-mylist = Listbox(window, yscrollcommand = scrollbar.set )
-mylist.bind("<<ListboxSelect>>",list_serial_ports)
 
 
 
 
-mylist.pack( side = RIGHT, fill = BOTH )
-scrollbar.config( command = mylist.yview )
+
+
+mylist = ttk.Combobox(window, values=[list_serial_ports])
+mylist.set("select USB compart", )
+mylist.bind("<<ComboboxSelected>>",list_serial_ports)
+mylist.place(y=190, x=650, width=250)
+
 
 
 
@@ -151,4 +162,4 @@ listbox.place(y=20, x=1100,)'''
 
 
 #listbox.insert(["al", "ye"])
-# window.mainloop()
+window.mainloop()
