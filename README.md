@@ -1,2 +1,2 @@
-# nrf9160-custon-certificate-writer
+# nrf9160-custom-certificate-writer
 uart certificate writer
